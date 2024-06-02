@@ -10,10 +10,10 @@ FILE: str = sys.argv[1]
 ribbon_sum: list[int] = []
 with open(FILE) as data:
     for _, line in enumerate(data):
-        l: int = int(line.split('x')[0])
-        w: int = int(line.split('x')[1])
-        h: int = int(line.split('x')[2])
-        dimentions = [l,w,h]
+        dimentions: list[str] = line.split('x')
+        l: int = int(dimentions[0])
+        w: int = int(dimentions[1])
+        h: int = int(dimentions[2])
         dimentions.sort()
         perimeter1 = dimentions[0] + dimentions[0]
         perimeter2 = dimentions[1] + dimentions[1]
