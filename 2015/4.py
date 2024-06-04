@@ -15,4 +15,5 @@ while True:
         print(f'Hash with 5 zeros {postfix}')
     if re.findall(pattern6, result):
         print(f'Hash with 6 zeros {postfix}')
+        break
     postfix += 1
