@@ -5,7 +5,8 @@ import re
 
 pattern5: str = r'^00000'
 pattern6: str = r'^000000'
-key: str = "bgvyzdsv"
+# key: str = "bgvyzdsv"
+key: str = "yzbqklnj"
 postfix: int = 0
 
 while True:

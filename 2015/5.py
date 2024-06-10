@@ -2,18 +2,40 @@
 
 import sys
 import re
+from typing import List
 
-FILE: str = sys.argv[1]
+input_file: str = sys.argv[1]
+
+def make_nice(line) -> bool:
+    pattern: List = ["ab", "cd", "pq", "xy"]
+    for substring in pattern:
+        res = re.findall(substring, line)
+        if len(res) != 0:
+            return False
+    return True
 
 
-def parser(line) -> str:
-    vowels: str = r'[aeiou]'
-    res = re.findall(vowels, line)
+def vowel(line) -> bool:
+    pattern: str = r'[aeiou]'
+    res: list[str] = re.findall(pattern, line)
     if len(res) >= 3:
-        return res
+        return True
+    else:
+        return False
 
 
-with open(FILE) as data:
-    lines = data.readlines()
-    vowels = [parser(line) for line in lines if parser(line) is not None]
-    print(vowels)
+def doubled(line) -> bool:
+    pattern: str = r'(.)\1'
+    res: list[str] = re.findall(pattern, line)
+    if len(res) != 0:
+        return True
+    else:
+        return False
+
+count = 0
+with open(input_file) as data:
+    lines = data.read().splitlines()
+    for line in lines:
+        if vowel(line) and doubled(line) and make_nice(line):
+            count += 1
+    print(count)
