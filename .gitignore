@@ -1,0 +1,15 @@
+.DS_Store
+.idea
+*.log
+*.csv
+*.xlsx
+*.txt
+*.cnn
+*.xopp
+tmp/
+data/
+
+*.py[cod]
+*.egg
+build
+htmlcov
