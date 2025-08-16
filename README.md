@@ -3,6 +3,6 @@ AoC is an attempt so solve Advent of Code challenges beginning from year 2015 to
 
 ## Rules
 
-- Use any programming language you wish (:snake:, :crab:)
+- Use any programming language you wish
 - No AI tools are allowed (e.g. Chat-GPT, Copilot ect.)
-- You can use official docs :eyeglass:, Stack Overflow, aks your friend (No, your're not allowed to google "Advent of Code 20xx day x solution")
+- Docs, Stack Overflow, aks your friend
