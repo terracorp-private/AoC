@@ -2,10 +2,10 @@ package main
 
 import (
 	"fmt"
-	"os"
-	"strings"
-
 	"gonum.org/v1/gonum/mat"
+	"os"
+	"strconv"
+	"strings"
 )
 
 func fileReader(input string) []string {
@@ -20,47 +20,60 @@ func fileReader(input string) []string {
 
 func instrunctDecode(instructions []string) {
 
-	rotations := []*mat.Dense{}
+	const left int = 76
+	const right int = 82
+
+	// Initial orientation
+	orientation := mat.NewDense(2, 1, []float64{
+		0,
+		1,
+	})
+
+	coordinates := mat.NewDense(2, 1, []float64{
+		0,
+		0,
+	})
+
+	finalCoordinate := mat.NewDense(2, 1, []float64{
+		0,
+		0,
+	})
 
 	// Initialize matrices for right and left rotation
-	rotR := mat.NewDense(2, 2, []float64{
+	rotL := mat.NewDense(2, 2, []float64{
 		0, -1,
 		1, 0,
 	})
 
-	rotL := mat.NewDense(2, 2, []float64{
+	rotR := mat.NewDense(2, 2, []float64{
 		0, 1,
 		-1, 0,
 	})
 
-	// TODO Rotation & Translation Struct
-
+	// Orientaiton after rotation
 	for _, instruction := range instructions {
-		rotationInstruction := instruction[0]
-		// rotationInstruction := string(instruction[0])
-		translationInstruction := instruction[1:]
-
-		if rotationInstruction == 76 {
-			rotations = append(rotations, rotR)
-			// fmt.Printf("Type of rotR is: %T\n", rotR)
-		} else {
-			rotations = append(rotations, rotL)
+		rotationInstruction := int(instruction[0])
+		translationInstruction := strings.TrimSpace("\n" + instruction[1:] + "\n")
+		translation, err := strconv.Atoi(translationInstruction)
+		if err != nil {
+			panic(err)
 		}
 
-		fmt.Println(rotationInstruction, translationInstruction)
-		fmt.Printf("%v\n", *rotations[0])
+		if rotationInstruction == right {
+			orientation.Mul(rotR, orientation)
+			coordinates.Scale(float64(translation), orientation)
+		} else if rotationInstruction == left {
+			orientation.Mul(rotL, orientation)
+			coordinates.Scale(float64(translation), orientation)
+		} else {
+			fmt.Print("Error in the matrix!")
+		}
+
+		finalCoordinate.Add(finalCoordinate, coordinates)
 	}
-}
-
-
-func rotator() {
-	// Take the matrix product of a and b and place the result in c.
-	// var c mat.Dense
-	// c.Mul(a, b)
-
-	// // Print the result using the formatter.
-	// fc := mat.Formatted(&c, mat.Prefix("    "), mat.Squeeze())
-	// fmt.Printf("c = %v\n", fc)
+	// Print the result using the formatter.
+	fc := mat.Formatted(finalCoordinate, mat.Prefix("    "), mat.Squeeze())
+	fmt.Printf("CoordinateInits = %v\n", fc)
 }
 
 func main() {
